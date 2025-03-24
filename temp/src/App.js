@@ -113,7 +113,7 @@ function App() {
               Analyzing design and generating code...
             </p>
             <p className="loading-subtext">
-              This may take 1-2 minutes depending on your system's performance
+              This may take 5-6 minutes depending on your system's performance
             </p>
           </div>
         )}
@@ -135,6 +135,15 @@ function App() {
               <div className="download-buttons">
                 <button
                   onClick={() => {
+                    if (
+                      !angularCode.ts_file ||
+                      angularCode.ts_file.trim() === ""
+                    ) {
+                      setError(
+                        "TypeScript file is empty. Try regenerating the code."
+                      );
+                      return;
+                    }
                     const blob = new Blob([angularCode.ts_file], {
                       type: "text/plain",
                     });
@@ -144,12 +153,24 @@ function App() {
                     link.click();
                   }}
                   className="download-button"
+                  disabled={
+                    !angularCode.ts_file || angularCode.ts_file.trim() === ""
+                  }
                 >
                   Download TypeScript (.ts)
                 </button>
 
                 <button
                   onClick={() => {
+                    if (
+                      !angularCode.html_file ||
+                      angularCode.html_file.trim() === ""
+                    ) {
+                      setError(
+                        "HTML file is empty. Try regenerating the code."
+                      );
+                      return;
+                    }
                     const blob = new Blob([angularCode.html_file], {
                       type: "text/plain",
                     });
@@ -159,13 +180,26 @@ function App() {
                     link.click();
                   }}
                   className="download-button"
+                  disabled={
+                    !angularCode.html_file ||
+                    angularCode.html_file.trim() === ""
+                  }
                 >
-                  Download HTML Template
+                  Download HTML (.html)
                 </button>
 
                 {angularCode.scss_file && (
                   <button
                     onClick={() => {
+                      if (
+                        !angularCode.scss_file ||
+                        angularCode.scss_file.trim() === ""
+                      ) {
+                        setError(
+                          "SCSS file is empty. Try regenerating the code."
+                        );
+                        return;
+                      }
                       const blob = new Blob([angularCode.scss_file], {
                         type: "text/plain",
                       });
@@ -175,8 +209,12 @@ function App() {
                       link.click();
                     }}
                     className="download-button"
+                    disabled={
+                      !angularCode.scss_file ||
+                      angularCode.scss_file.trim() === ""
+                    }
                   >
-                    Download SCSS Styles
+                    Download SCSS (.scss)
                   </button>
                 )}
               </div>
